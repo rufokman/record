@@ -47,6 +47,7 @@ class CardsForm(forms.ModelForm):
     class Meta:
         model = Card
         fields = [
+            'send',
             'organization',
             'role',
             'fio',
@@ -56,11 +57,14 @@ class CardsForm(forms.ModelForm):
             'target_level',
             'high_level',
             'weight',
+            'status',
         ]
         widgets = {
+            'send': forms.CheckboxInput(),
             'role': forms.Textarea(attrs={'rows': 2}),
             'fio': forms.Textarea(attrs={'rows': 2}),
             'name': forms.Textarea(attrs={'rows': 2}),
+            'status': forms.Textarea(attrs={'rows': 1}),
             # 'organization': floppyforms.widgets.Input(datalist=organization_list)
 
         }

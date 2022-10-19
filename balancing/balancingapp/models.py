@@ -11,6 +11,12 @@ class Config(models.Model):
 
 
 class Card(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.PositiveIntegerField(choices=[(0, 'agreed'),
+                                                  (1, 'onchecking'),
+                                                  (2, 'rejected'),
+                                                  (3, 'default')], default=3)
     organization_list = [
         (None, "Выберите организацию"),
         ("ЦА", "ЦА"),
@@ -53,6 +59,7 @@ class Card(models.Model):
         ( 'АТОМДАТА', 'АТОМДАТА'),
         ('Атомдата - Центр', 'Атомдата - Центр'),
         ('Атомдата - Иннополис', 'Атомдата - Иннополис')]
+    send = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     organization = models.CharField(choices=organization_list, verbose_name="Организация", max_length=300)
     function = models.PositiveIntegerField(choices=[
@@ -91,4 +98,3 @@ class Card(models.Model):
     class Meta:
         managed = True
         db_table = 'card'
-
