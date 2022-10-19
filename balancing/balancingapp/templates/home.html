@@ -2,34 +2,44 @@
 {% block content %}
 {% load bootstrap3 %}
 
-<form method="POST" enctype="multipart/form-data">
+<form id="data" method="POST" enctype="multipart/form-data">
+	<style type="text/css">
+	.a0 { background-color:#b2ec5d; }
+	.a1 { background-color:#fdc433; }
+	.a2 { background-color:#cb4154; }
+	.a3 { background-color:#f0f8ff; }
+	</style>
     <!-- Security token -->
 	{% csrf_token %}
+
 	<table id="table" class="form table table-condensed zeon zeon-row-hover">
 	{{ formset.management_form }}
 
 	{% for form in formset.forms %}
-	  {% if forloop.first %}
-	  <thead><tr>
-		{% for field in form.visible_fields %}
-		<th>{{ field.label|capfirst }}
-		{% endfor %}
-	  </tr></thead>
-	  {% endif %}
-	  <tr>
-	  {% for field in form.visible_fields %}
-		<td class = 'zeon_input_table_cell'>
-		{# Include the hidden fields in the form #}
+
 		{% if forloop.first %}
-			  {% for hidden in form.hidden_fields %}
-			  {{ hidden }}
-			  {% endfor %}
+		<thead>
+		<tr>
+			{% for field in form.visible_fields %}
+			<th>{{ field.label|capfirst }}</th>
+			{% endfor %}
+		</tr></thead>
 		{% endif %}
-		  {{ field.errors.as_ul }}
-			{{field}}
-		</td>
-	  {% endfor %}
-	  </tr>
+
+		<tr class='a{{form.status.value}}'>
+	  	{% for field in form.visible_fields %}
+			<td class = 'zeon_input_table_cell'>
+			{# Include the hidden fields in the form #}
+			{% if forloop.first %}
+				  {% for hidden in form.hidden_fields %}
+				  {{ hidden }}
+				  {% endfor %}
+			{% endif %}
+			  {{ field.errors.as_ul }}
+				{{field}}
+			</td>
+	  	{% endfor %}
+	  	</tr>
 	{% endfor %}
 		<script type = "text/javascript">
 			function isValid() {
@@ -72,7 +82,8 @@
 		</script>
 
 	</table>
-	<button type="submit" onclick="isValid()">Обновить</button>
+	<button type="submit" onclick="isValid()">Сохранить</button>
+	<input form='data' name='send_to_check' type="submit" onclick="isValid()"></input>
 
 </form>
 
