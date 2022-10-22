@@ -94,6 +94,7 @@ class Card(models.Model):
     target_level = models.CharField(max_length=3000, verbose_name='Целевой уровень')
     high_level = models.CharField(max_length=3000, verbose_name="Верхний уровень")
     weight = models.IntegerField(verbose_name='Вес')
+    passport = models.FileField(upload_to='passports/', verbose_name="Паспорт", default="", null=True, blank=True)
 
     class Meta:
         managed = True

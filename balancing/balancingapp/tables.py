@@ -15,7 +15,7 @@ class OnCheckingTable(tables.Table):
                  'role', 'fio',
                   'name', 'method', 'low_level', 'target_level',
                   'high_level', 'weight', 'path_to_doc',
-                  'comment', 'comment_CA', 'comment_AES_DO')
+                  'comment', 'comment_CA', 'comment_AES_DO', 'passport')
 
 
 class CardTable(tables.Table):
@@ -28,4 +28,4 @@ class CardTable(tables.Table):
                  'role', 'fio',
                   'name', 'method', 'low_level', 'target_level',
                   'high_level', 'weight', 'path_to_doc',
-                  'comment', 'comment_CA', 'comment_AES_DO')
+                  'comment', 'comment_CA', 'comment_AES_DO', 'passport')

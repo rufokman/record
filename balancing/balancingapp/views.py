@@ -12,15 +12,45 @@ from .models import *
 from .forms import *
 from .tables import *
 from django.contrib.auth.mixins import LoginRequiredMixin
+from balancing.settings import MEDIA_ROOT
+import os
 
+
+
+# def upload_passport(request):
+#     if request.method == 'POST':
+#         form = Card(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home.html')
+#     else:
+#         form = Card()
+#     return render(request, 'home.html', {
+#         'form': form
+#     })
 
 @login_required()
 def cards_update_view(request):
+    print(MEDIA_ROOT)
+    print(os.listdir(MEDIA_ROOT))
     data = Card.objects.filter(user=request.user)
     config_data = Config.objects.first()
     print(config_data)
     allow_edit = config_data.allow_edit
     context = {}
+    if request.method == 'POST':
+        form = CardFormSet(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # return redirect('kpibalancing/')
+    else:
+        form = CardFormSet()
+    # return render(request, 'home.html', {
+    #     'form': form
+    # })
+    # if request.method == 'GET':
+    #     passport=Card.objects.all()
+    #     return render(request, "home.html", passport)
     formset = CardFormSet(request.POST or None, queryset=data)
     if formset.is_valid():
         if allow_edit == False:
@@ -45,6 +75,7 @@ def cards_update_view(request):
         return redirect(reverse_lazy("update"))
     context['formset'] = formset
     return render(request, "home.html", context)
+
 
 
 class PivotCardView(SingleTableMixin, FilterView):
