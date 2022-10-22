@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .folder_of_views.admin_views import *
 from .services.file_creator import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("", views.cards_update_view, name='update'),
@@ -18,3 +20,6 @@ urlpatterns = [
 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

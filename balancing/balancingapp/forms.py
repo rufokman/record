@@ -58,6 +58,7 @@ class CardsForm(forms.ModelForm):
             'high_level',
             'weight',
             'status',
+            'passport',
         ]
         widgets = {
             'send': forms.CheckboxInput(),
